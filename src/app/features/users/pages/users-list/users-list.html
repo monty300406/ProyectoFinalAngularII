@@ -1,0 +1,42 @@
+<mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+
+<div *ngIf="error" class="error">
+  <mat-card>
+    <mat-card-title>Error</mat-card-title>
+    <mat-card-content>{{ error }}</mat-card-content>
+    <mat-card-actions>
+      <button mat-button (click)="fetchUsers()">Reintentar</button>
+    </mat-card-actions>
+  </mat-card>
+</div>
+
+<div *ngIf="!loading && !error">
+  <div class="actions">
+    <button mat-raised-button color="primary" routerLink="/users/create">
+      <mat-icon>person_add</mat-icon> Crear usuario
+    </button>
+  </div>
+
+  <div class="list">
+    <mat-card *ngFor="let u of users" class="user-card">
+      <mat-card-title>{{ u.name }} <small class="muted">({{ u.username }})</small></mat-card-title>
+      <mat-card-content>
+        <p><strong>Email:</strong> {{ u.email }}</p>
+        <p *ngIf="u.phone"><strong>Tel:</strong> {{ u.phone }}</p>
+        <p *ngIf="u.website"><strong>Web:</strong>
+          <a target="_blank" href="http://{{ u.website }}">{{ u.website }}</a>
+        </p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <div *ngIf="users.length === 0" class="empty">
+    <mat-card>
+      <mat-card-title>No hay usuarios</mat-card-title>
+      <mat-card-content>Aún no hay usuarios cargados.</mat-card-content>
+      <mat-card-actions>
+        <button mat-raised-button color="primary" routerLink="/users/create">Crear uno</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>
